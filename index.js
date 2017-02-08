@@ -28,7 +28,11 @@ app.use(express.static(path.join(__dirname, 'node_modules/bootstrap')));
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.get('/', (req, res) => {
-   res.render('index',{ title : 'Home' });
+    db.collection('quotes').find().toArray((err, result) => {
+      if (err) return console.log(err)
+      res.render('index',{ title : 'Quotes',quotes:result });
+    })
+
   //res.sendFile(__dirname + '/index.html')
   // Note: __dirname is directory that contains the JavaScript source code. Try logging it and see what you get!
   // Mine was '/Users/zellwk/Projects/demo-repos/crud-express-mongo' for this app.
