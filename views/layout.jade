@@ -3,10 +3,14 @@ html
   head
     title #{title} - My Site
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='dist/css/bootstrap.min.css')
+    script(src='dist/jquery.min.js')
+    script(src='dist/js/tether.min.js')
+    script(src='dist/js/bootstrap.min.js')
   body
     header
-      h1 My Site
-    .container
+      h1 My Quotes
+    .main-container
       .main-content
         block content
       .sidebar
