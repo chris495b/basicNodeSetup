@@ -1,9 +1,12 @@
 extend layout
 block content
   each item in quotes
-    p= item.quote
-      |...
-      span.badge.badge-default=item.name
+    div.alert.alert-warning.alert-dismissible.fade.show(role="alert") 
+      button.close(type="button" name="_id" data-dismiss="alert" aria-label="Close" data-id="#{item._id}")
+        span(aria-hidden="true") &times;
+      p= item.quote
+        |...
+        strong.badge.badge-default=item.name 
       
 block sidebar
   .widget
