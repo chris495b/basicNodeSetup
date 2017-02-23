@@ -35,10 +35,10 @@ var db;
 MongoClient.connect('mongodb://christie:christie0808@ds143539.mlab.com:43539/star-wars-quotes', (err, database) => {
   // ... start the server
   if (err) return console.log(err);
-  db = database;
+  db = database,collection=db.collection('quotes');
   app.listen(3000, () => {
     app.get('/', (req, res) => {
-        db.collection('quotes').find().toArray((err, result) => {
+        collection.find().toArray((err, result) => {
           if (err) return console.log(err)
           res.render('index',{ title : 'Quotes',quotes:result });
         })
@@ -48,13 +48,35 @@ MongoClient.connect('mongodb://christie:christie0808@ds143539.mlab.com:43539/sta
       // Mine was '/Users/zellwk/Projects/demo-repos/crud-express-mongo' for this app.
     });
 
+
     app.post('/quotes', (req, res) => {
-      db.collection('quotes').save(req.body, (err, result) => {
-        if (err) return console.log(err);
-        console.log('saved to database');
-        res.redirect('/');
+      // ----------
+      // find if user name is presnt in db
+      // if present update else create new
+      // ---------
+
+        collection.find({"name":req.body.name.toLowerCase()}).toArray((err, result) => {
+          if (err) return console.log(err)
+          if(result.length > 0){
+            collection.findOneAndUpdate({"name":req.body.name.toLowerCase()},{ $set: { "quote" :req.body.quote}},(err, result) => {
+              if (err) return console.log(err)
+              // res.render('index',{ title : 'Quotes',quotes:result });
+              console.log("Update sucessful",result);
+              res.redirect('/');
+            })
+          }else{
+            req.body.name=req.body.name.toLowerCase();
+            collection.save(req.body, (err, result) => {
+              if (err) return console.log(err);
+              console.log('saved to database');
+              res.redirect('/');
+            });
+          }
+        })
+        if (err) return console.log(err)
+        // res.render('index',{ title : 'Quotes',quotes:result });
+
       });
-    });
 
     app.delete('/quotes', (req, res) => {
       console.log(req.body._id);
@@ -65,17 +87,7 @@ MongoClient.connect('mongodb://christie:christie0808@ds143539.mlab.com:43539/sta
       });
     });
 
-    app.update('/quotes', (req, res) => {
-      console.log(req.body.name);
-      db.collection('quotes').findOneAndUpdate(
-        {"name":req.body.name},
-        { $set: { 'quote': req.body.quote, } },
-      },
-      (err, result) => {
-        if (err) return res.send(500, err)
-        res.send({"msg":''+req.body._id+ 'quote got deleted'});
-      });
-    });
+
     console.log('localhost:3000....running');
   });
 

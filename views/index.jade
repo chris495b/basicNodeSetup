@@ -15,7 +15,7 @@ block sidebar
       | Below is a form,it consists of name and
       | quote fields please fill appropriatly.
     form(action="/quotes" method="POST")
-      input(type="text" id="name" name="name" aria-describedby="name" placeholder="Enter name")
-      textarea(id="quote" name="quote" aria-describedby="quote" placeholder="Quote")
+      input(type="text" id="name" name="name" aria-describedby="name" placeholder="Enter name" required)
+      textarea(id="quote" name="quote" aria-describedby="quote" placeholder="Quote" required)
       button.btn.btn-sm.btn-link(type="submit") submit
         
