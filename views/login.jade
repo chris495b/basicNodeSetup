@@ -1,0 +1,23 @@
+doctype
+html
+  head
+    title #{title} - My Site
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='dist/css/bootstrap.min.css')
+    script(src='dist/jquery.min.js')
+    script(src='dist/js/tether.min.js')
+    script(src='dist/js/bootstrap.min.js')
+    script(src='/js/custom.js')
+    
+  body
+    .container
+      .jumbotron
+        form.form-inline(action="/login" method="POST")
+          label.sr-only(for="inlineFormInput") Name
+          input.form-control.mb-2.mr-sm-2.mb-sm-0(type="text" id="inlineFormInput" name="name" placeholder="Jane Doe")
+          
+          label.sr-only(for="inlineFormInput") Password
+          input.form-control.mb-2.mr-sm-2.mb-sm-0(type="password" id="inlineFormInput" name="pwd" placeholder="xxxx")
+          
+          button.btn.btn-primary(type="submit") Submit
+      

@@ -47,8 +47,6 @@ MongoClient.connect('mongodb://christie:christie0808@ds143539.mlab.com:43539/sta
       // Note: __dirname is directory that contains the JavaScript source code. Try logging it and see what you get!
       // Mine was '/Users/zellwk/Projects/demo-repos/crud-express-mongo' for this app.
     });
-
-
     app.post('/quotes', (req, res) => {
       // ----------
       // find if user name is presnt in db
@@ -86,12 +84,18 @@ MongoClient.connect('mongodb://christie:christie0808@ds143539.mlab.com:43539/sta
         res.send({"msg":''+req.body._id+ 'quote got deleted'});
       });
     });
-
-
+// ----------------------------------------------------------------
+// ----------------------------------------------------------------
+//Login
+//-----------------------------------------------------------------
+//-----------------------------------------------------------------
+    app.get('/login', (req, res) => {
+      res.render('login');
+    });
+    app.post('/login', (req, res) => {
+      console.log(req.body);
+      res.redirect('/login');
+    });
     console.log('localhost:3000....running');
   });
-
-
-
-
 })
